@@ -1,0 +1,1 @@
+{"version":3,"file":"company.model.js","sourceRoot":"","sources":["../../src/models/company.model.ts"],"names":[],"mappings":";;;AAAA,iDAA0C;AAW1C,MAAa,YAAY;IACvB,MAAM,CAAC,KAAK,CAAC,MAAM;QACjB,MAAM,MAAM,GAAG,MAAM,eAAI,CAAC,KAAK,CAAC,2CAA2C,CAAC,CAAC;QAC7E,OAAO,MAAM,CAAC,IAAI,CAAC;IACrB,CAAC;CACF;AALD,oCAKC"}

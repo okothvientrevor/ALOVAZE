@@ -19,9 +19,17 @@ class ReviewModel {
         content,
         pros,
         cons,
-        experience_date
+        experience_date,
+        review_type,
+        employment_status,
+        job_title,
+        work_life_balance_rating,
+        compensation_rating,
+        culture_rating,
+        management_rating,
+        career_opportunities_rating
       )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
       RETURNING *
     `;
         const values = [
@@ -33,6 +41,14 @@ class ReviewModel {
             reviewData.pros || null,
             reviewData.cons || null,
             reviewData.experience_date || null,
+            reviewData.review_type || 'customer',
+            reviewData.employment_status || null,
+            reviewData.job_title || null,
+            reviewData.work_life_balance_rating || null,
+            reviewData.compensation_rating || null,
+            reviewData.culture_rating || null,
+            reviewData.management_rating || null,
+            reviewData.career_opportunities_rating || null,
         ];
         const result = await database_1.pool.query(query, values);
         return result.rows[0];
@@ -46,7 +62,7 @@ class ReviewModel {
         u.full_name as user_name,
         u.profile_image_url as user_image,
         u.is_verified_reviewer,
-        c.company_name,
+        c.name as company_name,
         c.logo_url as company_logo
       FROM reviews r
       LEFT JOIN users u ON r.user_id = u.id
@@ -271,6 +287,36 @@ class ReviewModel {
                 2: parseInt(row.two_star, 10),
                 1: parseInt(row.one_star, 10),
             },
+        };
+    }
+    /**
+     * Get all reviews
+     */
+    static async findAll(options = {}) {
+        const limit = options.limit || 10;
+        const offset = options.offset || 0;
+        // Get total count
+        const countQuery = 'SELECT COUNT(*) FROM reviews';
+        const countResult = await database_1.pool.query(countQuery);
+        const total = parseInt(countResult.rows[0].count, 10);
+        // Get reviews
+        const query = `
+      SELECT r.*, 
+        u.full_name as user_name,
+        u.profile_image_url as user_image,
+        u.is_verified_reviewer,
+        c.name as company_name,
+        c.logo_url as company_logo
+      FROM reviews r
+      LEFT JOIN users u ON r.user_id = u.id
+      LEFT JOIN companies c ON r.company_id = c.id
+      ORDER BY r.created_at DESC
+      LIMIT $1 OFFSET $2
+    `;
+        const result = await database_1.pool.query(query, [limit, offset]);
+        return {
+            reviews: result.rows,
+            total,
         };
     }
 }

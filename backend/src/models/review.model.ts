@@ -337,4 +337,41 @@ export class ReviewModel {
       },
     };
   }
+
+  /**
+   * Get all reviews
+   */
+  static async findAll(
+    options: { limit?: number; offset?: number } = {}
+  ): Promise<{ reviews: Review[]; total: number }> {
+    const limit = options.limit || 10;
+    const offset = options.offset || 0;
+
+    // Get total count
+    const countQuery = 'SELECT COUNT(*) FROM reviews';
+    const countResult = await pool.query(countQuery);
+    const total = parseInt(countResult.rows[0].count, 10);
+
+    // Get reviews
+    const query = `
+      SELECT r.*, 
+        u.full_name as user_name,
+        u.profile_image_url as user_image,
+        u.is_verified_reviewer,
+        c.name as company_name,
+        c.logo_url as company_logo
+      FROM reviews r
+      LEFT JOIN users u ON r.user_id = u.id
+      LEFT JOIN companies c ON r.company_id = c.id
+      ORDER BY r.created_at DESC
+      LIMIT $1 OFFSET $2
+    `;
+
+    const result = await pool.query(query, [limit, offset]);
+
+    return {
+      reviews: result.rows as Review[],
+      total,
+    };
+  }
 }

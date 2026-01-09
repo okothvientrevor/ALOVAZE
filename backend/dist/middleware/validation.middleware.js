@@ -75,8 +75,8 @@ exports.validationSchemas = {
             'string.max': 'Title cannot exceed 200 characters',
             'any.required': 'Title is required',
         }),
-        content: joi_1.default.string().min(50).max(5000).required().messages({
-            'string.min': 'Review content must be at least 50 characters long',
+        content: joi_1.default.string().min(10).max(5000).required().messages({
+            'string.min': 'Review content must be at least 10 characters long',
             'string.max': 'Review content cannot exceed 5000 characters',
             'any.required': 'Review content is required',
         }),
@@ -88,7 +88,7 @@ exports.validationSchemas = {
     updateReview: joi_1.default.object({
         rating: joi_1.default.number().integer().min(1).max(5).optional(),
         title: joi_1.default.string().min(10).max(200).optional(),
-        content: joi_1.default.string().min(50).max(5000).optional(),
+        content: joi_1.default.string().min(10).max(5000).optional(),
         pros: joi_1.default.string().max(1000).allow('', null),
         cons: joi_1.default.string().max(1000).allow('', null),
     }).min(1), // At least one field must be provided

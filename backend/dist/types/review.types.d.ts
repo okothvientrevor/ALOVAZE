@@ -30,6 +30,16 @@ export interface Review {
     updated_at: Date;
     published_at?: Date;
     edited_at?: Date;
+    review_type?: 'customer' | 'employee' | 'business';
+    employment_status?: 'current' | 'former' | 'contract' | 'intern';
+    job_title?: string;
+    pros?: string;
+    cons?: string;
+    work_life_balance_rating?: number;
+    compensation_rating?: number;
+    culture_rating?: number;
+    management_rating?: number;
+    career_opportunities_rating?: number;
 }
 export interface ReviewCreateInput {
     company_id: string;
@@ -42,6 +52,14 @@ export interface ReviewCreateInput {
     reviewer_location?: string;
     purchase_verified?: boolean;
     purchase_amount?: number;
+    review_type?: 'customer' | 'employee' | 'business';
+    employment_status?: 'current' | 'former' | 'contract' | 'intern';
+    job_title?: string;
+    work_life_balance_rating?: number;
+    compensation_rating?: number;
+    culture_rating?: number;
+    management_rating?: number;
+    career_opportunities_rating?: number;
 }
 export interface ReviewUpdateInput {
     rating?: number;
@@ -51,6 +69,14 @@ export interface ReviewUpdateInput {
     cons?: string;
     experience_date?: string;
     reviewer_location?: string;
+    review_type?: 'customer' | 'employee' | 'business';
+    employment_status?: 'current' | 'former' | 'contract' | 'intern';
+    job_title?: string;
+    work_life_balance_rating?: number;
+    compensation_rating?: number;
+    culture_rating?: number;
+    management_rating?: number;
+    career_opportunities_rating?: number;
 }
 export interface ReviewResponse {
     id: string;

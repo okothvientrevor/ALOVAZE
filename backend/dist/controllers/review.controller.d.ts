@@ -36,5 +36,9 @@ export declare class ReviewController {
      * Get review statistics for a company
      */
     static getStatistics(req: Request, res: Response): Promise<void>;
+    /**
+     * Get all reviews
+     */
+    static getAll(req: Request, res: Response): Promise<void>;
 }
 //# sourceMappingURL=review.controller.d.ts.map

@@ -63,5 +63,15 @@ export declare class ReviewModel {
             [key: number]: number;
         };
     }>;
+    /**
+     * Get all reviews
+     */
+    static findAll(options?: {
+        limit?: number;
+        offset?: number;
+    }): Promise<{
+        reviews: Review[];
+        total: number;
+    }>;
 }
 //# sourceMappingURL=review.model.d.ts.map

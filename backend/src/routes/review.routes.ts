@@ -6,6 +6,13 @@ import { validate, validationSchemas } from '../middleware/validation.middleware
 const router: Router = Router();
 
 /**
+ * @route   GET /api/reviews
+ * @desc    Get all reviews
+ * @access  Public
+ */
+router.get('/', ReviewController.getAll);
+
+/**
  * @route   POST /api/reviews
  * @desc    Create a new review
  * @access  Private

@@ -306,4 +306,36 @@ export class ReviewController {
       });
     }
   }
+
+  /**
+   * Get all reviews
+   */
+  static async getAll(req: Request, res: Response): Promise<void> {
+    try {
+      const limit = parseInt(req.query.limit as string) || 10;
+      const offset = parseInt(req.query.offset as string) || 0;
+
+      const result = await ReviewModel.findAll({ limit, offset });
+
+      res.status(200).json({
+        success: true,
+        data: {
+          reviews: result.reviews,
+          pagination: {
+            total: result.total,
+            limit,
+            offset,
+            hasMore: offset + limit < result.total,
+          },
+        },
+      });
+    } catch (error) {
+      console.error('Get all reviews error:', error);
+      res.status(500).json({
+        success: false,
+        error: 'Failed to get reviews',
+        message: 'An error occurred while fetching reviews',
+      });
+    }
+  }
 }
